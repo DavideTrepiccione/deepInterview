@@ -15,12 +15,11 @@ class RecordingThread(QThread):
     def __init__(self):
         QThread.__init__(self)
     def run(self):
-        print("RecordingThread.inizio la registrazione")
         self.record_audio()
-        print("RecordingThread.registrazione terminata")
         
 
     def record_audio(self,output_filename="prova.wav", chunk_size=1024):
+        print("RecordingThread.record_audio start")
         import soundcard as sc
         import soundfile as sf
         try:
@@ -34,11 +33,10 @@ class RecordingThread(QThread):
             sf.write(file=output_filename, data=data, samplerate=SAMPLE_RATE)
         except Exception as e:
             print(e)
-        print("Registrazione terminata")
+        print("RecordingThread.record_audio finish")
         return output_filename
   
     def stopRecording(self):
-        print("Concludo la registrazione")
         self.isStarted = False
 
 

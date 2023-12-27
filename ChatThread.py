@@ -20,7 +20,8 @@ class ChatThread(QThread):
         self.idCount=idCount
         QThread.__init__(self)
 
-    def run(self):              
+    def run(self):      
+        print("ChatThread.run start")        
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             temperature=0,
@@ -33,6 +34,7 @@ class ChatThread(QThread):
             if chunk is not None and chunk.choices[0] is not None and chunk.choices[0].delta is not None and chunk.choices[0].delta.content is not None:
                 chunk_message += chunk.choices[0].delta.content
                 self.update_output_signal.emit(chunk_message+" §"+str(self.idCount))
+        print("ChatThread.run start")
         self.update_messages_signal.emit(chunk_message+" §"+str(self.idCount))
 
     

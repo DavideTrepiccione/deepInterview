@@ -14,13 +14,13 @@ class TranscribeThread(QThread):
         QThread.__init__(self)
 
     def run(self):
-        print("TranscribeThread. inizio trascrizione")
+        print("TranscribeThread.run start")
         try:
             transcription = self.transcribe()
             self.transcriptionSignal.emit(transcription)
         except Exception as e:
             print(f"Si è verificato un errore: {e}")
-        print("TranscribeThread. fine trascrizione",transcription)
+        print("TranscribeThread.run start",transcription)
 
     def transcribe(self,audio_file_path="prova.wav"):
         # Assumi che il file audio sia un file .mp3 o un formato supportato
