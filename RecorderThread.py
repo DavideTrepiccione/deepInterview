@@ -8,11 +8,12 @@ class RecordingThread(QThread):
     update_log_signal = pyqtSignal(str)
     update_input_signal = pyqtSignal(str)
     update_output_signal = pyqtSignal(str)
-    
+    currentIndex=0
     isStarted=True
     messages=[]
 
-    def __init__(self):
+    def __init__(self,currentIndex):
+        self.currentIndex=currentIndex
         QThread.__init__(self)
     def run(self):
         self.record_audio()
@@ -22,14 +23,17 @@ class RecordingThread(QThread):
         print("RecordingThread.record_audio start")
         import soundcard as sc
         import soundfile as sf
+        source = sc.default_speaker()
+        if self.currentIndex == 1:
+            source =sc.default_microphone()
         try:
             data =[]
             self.update_log_signal.emit("Inizia la registrazione...")
             SAMPLE_RATE = 48000
-            with sc.get_microphone(id=str(sc.default_speaker().name), include_loopback=True).recorder(samplerate=SAMPLE_RATE) as mic:
-                while self.isStarted:
-                    block = mic.record(numframes=int(SAMPLE_RATE*1))
-                    data.extend(block)
+            with sc.get_microphone(id=str(sc.default_speaker()), include_loopback=True).recorder(samplerate=SAMPLE_RATE) as mic:
+                    while self.isStarted:
+                        block = mic.record(numframes=int(SAMPLE_RATE*1))
+                        data.extend(block)
             sf.write(file=output_filename, data=data, samplerate=SAMPLE_RATE)
         except Exception as e:
             print(e)

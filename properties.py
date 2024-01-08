@@ -1,10 +1,12 @@
-URL_CHAT ="https://api.openai.com/v1/chat/completions"
-API_KEY ="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"
-PATH_RESUME=""
-PATH_INFO_JOB ="" 
-ENGINE = "text-davinci-003"
-SYSTEM_PROMPT_SPEECH="Sei un assistente utile che aiuta nella trascrizione di colloqui di lavoro. Il tuo compito è correggere eventuali discrepanze ortografiche nel testo trascritto, assicurandoti che i termini tecnologici in inglese siano scritti correttamente, indipendentemente dalla lingua parlata nell'audio. Fai attenzione a trascrivere correttamente qualsiasi termine tecnico, acronimo o jargon specifico del settore, mantenendo la punteggiatura necessaria come punti, virgole e maiuscole. Usa solo il contesto fornito per effettuare queste correzioni."
-SYSTEM_PROMPT_INTERVIEW=""
+import json
+p={}
+# Apri il file JSON per la lettura
+with open('properties.json', 'r') as file:
+    # Carica il contenuto del file JSON in un dizionario
+    p = json.load(file)
+
+
+
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>

@@ -1,9 +1,9 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 from openai import *
-import properties as p 
+from properties import p 
 
-api_key = p.API_KEY
-client = Client(api_key=p.API_KEY)
+api_key = p["API_KEY"]
+client = Client(api_key=api_key)
 
 # Assumi che le funzioni transcribe e chat2 siano già definite
 # e che le credenziali API siano gestite in modo appropriato
@@ -15,6 +15,7 @@ class TranscribeThread(QThread):
 
     def run(self):
         print("TranscribeThread.run start")
+        transcription=""
         try:
             transcription = self.transcribe()
             self.transcriptionSignal.emit(transcription)
